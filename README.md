@@ -64,14 +64,6 @@ const $ = cheerio.load(html);
 console.log($("p").first().text()); // => test
 ```
 
-## Get attribute of one element
-
-```javascript
-const html = `<p class="foo">test</p>`;
-const $ = cheerio.load(html);
-console.log($("p").first().attr("class")); // => foo
-```
-
 ## Get text contents of multiple elements
 
 ```javascript
@@ -105,6 +97,14 @@ $("p").each(function () {
 });
 ```
 
+## Get attribute of one element
+
+```javascript
+const html = `<p class="foo">test</p>`;
+const $ = cheerio.load(html);
+console.log($("p").first().attr("class")); // => foo
+```
+
 ## Get attributes of multiple elements
 
 ```javascript
@@ -123,6 +123,14 @@ const html = `<p id="foo" class="baz">test</p>`;
 const $ = cheerio.load(html);
 const attributes = $("p").get(0).attribs;
 console.log(attributes); // => { id: 'foo', class: 'baz' }
+```
+
+## Get value from an element
+
+```javascript
+const html = `<input value="foo">`;
+const $ = cheerio.load(html);
+console.log($("input").val()); // => foo
 ```
 
 ## Get the last element
