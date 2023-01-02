@@ -121,7 +121,7 @@ console.log(classes); // => [ 'baz', 'quux' ]
 ```javascript
 const html = `<p id="foo" class="baz">test</p>`;
 const $ = cheerio.load(html);
-const attributes = $("p").get(0).attribs;
+const attributes = $("p").attr();
 console.log(attributes); // => { id: 'foo', class: 'baz' }
 ```
 
@@ -432,15 +432,15 @@ console.log($("p").attr("class")); // => undefined
 ```javascript
 const html = `<p class="foo"></p>`;
 const $ = cheerio.load(html);
-console.log($("p").get(0).attribs); // => { class: 'foo' }
+console.log($("p").attr()); // => { class: 'foo' }
 $("p").addClass("bar");
-console.log($("p").get(0).attribs); // => { class: 'foo bar' }
+console.log($("p").attr()); // => { class: 'foo bar' }
 $("p").removeClass("foo");
-console.log($("p").get(0).attribs); // => { class: 'bar' }
+console.log($("p").attr()); // => { class: 'bar' }
 $("p").toggleClass("foo");
-console.log($("p").get(0).attribs); // => { class: 'bar foo' }
+console.log($("p").attr()); // => { class: 'bar foo' }
 $("p").toggleClass("foo");
-console.log($("p").get(0).attribs); // => { class: 'bar' }
+console.log($("p").attr()); // => { class: 'bar' }
 console.log($("p").hasClass("bar")); // => true
 ```
 
