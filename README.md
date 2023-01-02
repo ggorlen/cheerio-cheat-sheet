@@ -30,17 +30,16 @@ const fs = require("node:fs/promises");
 
 ## Load HTML from HTTP response
 
+With fetch (Node 18+ or with node-fetch):
+
 ```javascript
 const cheerio = require("cheerio");
 
 const url = "https://www.example.com";
+const ua =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36";
 
-fetch(url, { // Node 18 or install node-fetch, or use another library like axios
-  headers: {
-    // avoid blocking on certain sites
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36",
-  }
-})
+fetch(url, {headers: {"User-Agent": ua}})
   .then(res => {
     if (!res.ok) {
       throw Error(res.statusText);
@@ -53,7 +52,27 @@ fetch(url, { // Node 18 or install node-fetch, or use another library like axios
 
     // select element by text with :cotains
     console.log($("h1:contains('Example')").text()); // => Example Domain
-  });
+  })
+  .catch(err => console.error(err));
+```
+
+With axios:
+
+```javascript
+const axios = require("axios");
+const cheerio = require("cheerio");
+
+const url = "https://example.com";
+const ua =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36";
+
+axios
+  .get(url, {headers: {"User-Agent": ua}})
+  .then(({data: html}) => {
+    const $ = cheerio.load(html);
+    console.log($("h1:contains('Example')").text()); // => Example Domain
+  })
+  .catch((err) => console.error(err));
 ```
 
 ## Get text contents of one element
