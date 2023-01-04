@@ -144,12 +144,20 @@ const attributes = $("p").attr();
 console.log(attributes); // => { id: 'foo', class: 'baz' }
 ```
 
-## Get value from an element
+## Get value of an element
 
 ```javascript
 const html = `<input value="foo">`;
 const $ = cheerio.load(html);
 console.log($("input").val()); // => foo
+```
+
+## Get data attribute from an element
+
+```javascript
+const html = `<p data-testid="foo">`;
+const $ = cheerio.load(html);
+console.log($("p").data("testid")); // => foo
 ```
 
 ## Get the last element
@@ -274,12 +282,31 @@ const text = [...$("div").contents()]
 console.log(text); // => [ 'one', 'two', 'three' ]
 ```
 
-## Query in children
+## Query immediate children
 
 ```javascript
-const html = `<div><p>foo</p></div>`;
+const html = `
+<div>
+  <p>
+    <b>foo</b>
+  </p>
+</div>`;
 const $ = cheerio.load(html);
-const text = $("div").find("p").text();
+const results = $("div").children("b");
+console.log(results.length); // => 0
+```
+
+## Query descendents
+
+```javascript
+const html = `
+<div>
+  <p>
+    <b>foo</b>
+  </p>
+</div>`;
+const $ = cheerio.load(html);
+const text = $("div").find("b").text();
 console.log(text); // => foo
 ```
 
@@ -614,4 +641,22 @@ const html = `<noscript><p>get me</p></noscript>`;
 const $ = cheerio.load(html, {xml: {xmlMode: true}});
 const text = $("p").text();
 console.log(text); // => get me
+```
+
+## Use `$` in helper functions without having to pass it each time
+
+Best I can offer is a closure--is there a better way in newer Cheerio versions?
+
+```javascript
+const bindCheerioHelpers = $ => ({
+  textAll: s => [...$(s)].map(e => $(e).text().trim()),
+});
+
+const main = () => {
+  const html = `<p>foo</p><p>bar</p>`;
+  const $ = cheerio.load(html);
+  const {textAll} = bindCheerioHelpers($);
+  console.log(textAll("p")); // => [ 'foo', 'bar' ]
+};
+main();
 ```
