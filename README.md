@@ -178,6 +178,15 @@ const text = $("p").next().text();
 console.log(text); // => two
 ```
 
+## Get the next element matching selector
+
+```javascript
+const html = `<p>one</p><p>two</p><p>three</p>`;
+const $ = cheerio.load(html);
+const text = $("p").next(':contains("three")').text();
+console.log(text); // => three
+```
+
 ## Get the previous element
 
 ```javascript
