@@ -160,6 +160,22 @@ const $ = cheerio.load(html);
 console.log($("p").data("testid")); // => foo
 ```
 
+## Get the `innerHTML` of an element
+
+```javascript
+const html = `<p><b>foo</b></p>`;
+const $ = cheerio.load(html);
+console.log($("p").html()); // => <b>foo</b>
+```
+
+## Get the `outerHTML` of an element
+
+```javascript
+const html = `<p>foo</p>`;
+const $ = cheerio.load(html);
+console.log($.html($("p"))); // => <p>foo</p>
+```
+
 ## Get the last element
 
 ```javascript
