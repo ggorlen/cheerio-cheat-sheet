@@ -643,6 +643,17 @@ console.log($("body").html());
 */
 ```
 
+## Get text in a comment
+
+```javascript
+const html = `<p>foo<!-- bar --><!-- baz --></p>`;
+const $ = cheerio.load(html);
+const comments = [...$("p").contents()]
+  .filter(e => e.type === "comment")
+  .map(e => e.data);
+console.log(comments); // => [ ' bar ', ' baz ' ]
+```
+
 ## Get text in a `<noscript>` tag
 
 ```javascript
