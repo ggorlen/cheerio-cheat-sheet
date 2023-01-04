@@ -176,6 +176,21 @@ const $ = cheerio.load(html);
 console.log($.html($("p"))); // => <p>foo</p>
 ```
 
+## Get the first element
+
+```javascript
+const html = `<p>one</p><p>two</p><p>three</p>`;
+const $ = cheerio.load(html);
+const text = $("p").first().text();
+console.log(text); // => one
+```
+
+Or:
+
+```javascript
+const text = $("p:first").text();
+```
+
 ## Get the last element
 
 ```javascript
@@ -183,6 +198,12 @@ const html = `<p>one</p><p>two</p><p>three</p>`;
 const $ = cheerio.load(html);
 const text = $("p").last().text();
 console.log(text); // => three
+```
+
+Or:
+
+```javascript
+const text = $("p:last").text();
 ```
 
 ## Get the next element
@@ -224,10 +245,7 @@ console.log(text); // => two
 Or:
 
 ```javascript
-const html = `<p>one</p><p>two</p><p>three</p>`;
-const $ = cheerio.load(html);
 const text = $($("p").eq(1)).text();
-console.log(text); // => two
 ```
 
 ## Get the n-th element from the rear
