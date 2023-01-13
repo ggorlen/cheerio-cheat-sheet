@@ -296,6 +296,15 @@ const classes = $("p")
 console.log(classes); // => [ 'C', 'B', 'A' ]
 ```
 
+## Get the next text node
+
+```js
+const html = `<p>foo</p>bar<br>`;
+const $ = cheerio.load(html);
+const text = $("p")[0].nextSibling.nodeValue;
+console.log(text); // => bar
+```
+
 ## Get index of element among its siblings
 
 ```javascript
