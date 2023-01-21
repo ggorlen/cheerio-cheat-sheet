@@ -233,6 +233,49 @@ const text = $(":contains('two')").prev().text();
 console.log(text); // => one
 ```
 
+## Get previous sibling elements
+
+```javascript
+const html = `
+<ul>
+  <li>a</li>
+  <li>b</li>
+  <li>c</li>
+  <li>d</li>
+</ul>`;
+const $ = cheerio.load(html);
+const text = $("li:contains('d')")
+  .first()
+  .prevAll("li:contains('a'), li:contains('b')") // optional filter
+  .addBack(/* optional filter could go here */) // optionally include 'd' and reverse
+  .get()
+  .map(e => $(e).text());
+console.log(text); // => [ 'a', 'b', 'c', 'd' ]
+```
+
+(`.nextAll` is also available)
+
+### Get previous elements up to a selector
+
+```javascript
+const html = `
+<ul>
+  <li>a</li>
+  <li>b</li>
+  <li>c</li>
+  <li>d</li>
+</ul>`;
+const $ = cheerio.load(html);
+const text = $("li:contains('d')")
+  .first()
+  .prevUntil("li:contains('a')")
+  .get()
+  .map(e => $(e).text());
+console.log(text); // => [ 'c', 'b' ]
+```
+
+(`.nextUntil` is also available)
+
 ## Get the n-th element
 
 ```javascript
