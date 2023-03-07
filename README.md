@@ -744,7 +744,7 @@ console.log(comments); // => [ ' bar ', ' baz ' ]
 
 ```javascript
 const html = `<noscript><p>get me</p></noscript>`;
-const $ = cheerio.load(html, {xml: {xmlMode: true}});
+const $ = cheerio.load(html, {xml: true});
 const text = $("p").text();
 console.log(text); // => get me
 ```
