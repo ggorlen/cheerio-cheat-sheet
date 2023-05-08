@@ -50,7 +50,7 @@ fetch(url, {headers: {"User-Agent": ua}})
   .then(html => {
     const $ = cheerio.load(html);
 
-    // select element by text with :cotains
+    // select element by text with :contains
     console.log($("h1:contains('Example')").text()); // => Example Domain
   })
   .catch(err => console.error(err));
