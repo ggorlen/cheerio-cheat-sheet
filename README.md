@@ -348,6 +348,15 @@ const text = $("p")[0].nextSibling.nodeValue;
 console.log(text); // => bar
 ```
 
+## Get multiple next text nodes
+
+```js
+const html = `<p>foo</p>bar<p>baz</p>quux`;
+const $ = cheerio.load(html);
+const text = [...$("p")].map(e => e.nextSibling.nodeValue);
+console.log(text); // => [ 'bar', 'quux' ]
+```
+
 ## Get index of element among its siblings
 
 ```javascript
