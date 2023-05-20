@@ -341,7 +341,7 @@ console.log(classes); // => [ 'C', 'B', 'A' ]
 
 ## Get the next text node
 
-```js
+```javascript
 const html = `<p>foo</p>bar<br>`;
 const $ = cheerio.load(html);
 const text = $("p")[0].nextSibling.nodeValue;
@@ -350,7 +350,7 @@ console.log(text); // => bar
 
 ## Get multiple next text nodes
 
-```js
+```javascript
 const html = `<p>foo</p>bar<p>baz</p>quux`;
 const $ = cheerio.load(html);
 const text = [...$("p")].map(e => e.nextSibling.nodeValue);
@@ -774,4 +774,13 @@ const main = () => {
   console.log(textAll("p")); // => [ 'foo', 'bar' ]
 };
 main();
+```
+
+## Query XML CDATA
+
+```javascript
+const xml = `<description><![CDATA[<p>foo</p>]]></description>`;
+const $ = cheerio.load(xml, {xml: true});
+const text = $.load($("description").text())("p").text();
+console.log(text); // => foo
 ```
