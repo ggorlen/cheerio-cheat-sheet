@@ -50,7 +50,7 @@ fetch(url, {headers: {"User-Agent": ua}})
   .then(html => {
     const $ = cheerio.load(html);
 
-    // select element by text with :cotains
+    // select element by text with :contains
     console.log($("h1:contains('Example')").text()); // => Example Domain
   })
   .catch(err => console.error(err));
@@ -233,6 +233,49 @@ const text = $(":contains('two')").prev().text();
 console.log(text); // => one
 ```
 
+## Get previous sibling elements
+
+```javascript
+const html = `
+<ul>
+  <li>a</li>
+  <li>b</li>
+  <li>c</li>
+  <li>d</li>
+</ul>`;
+const $ = cheerio.load(html);
+const text = $("li:contains('d')")
+  .first()
+  .prevAll("li:contains('a'), li:contains('b')") // optional filter
+  .addBack(/* optional filter could go here */) // optionally include 'd' and reverse
+  .get()
+  .map(e => $(e).text());
+console.log(text); // => [ 'a', 'b', 'c', 'd' ]
+```
+
+(`.nextAll` is also available)
+
+### Get previous elements up to a selector
+
+```javascript
+const html = `
+<ul>
+  <li>a</li>
+  <li>b</li>
+  <li>c</li>
+  <li>d</li>
+</ul>`;
+const $ = cheerio.load(html);
+const text = $("li:contains('d')")
+  .first()
+  .prevUntil("li:contains('a')")
+  .get()
+  .map(e => $(e).text());
+console.log(text); // => [ 'c', 'b' ]
+```
+
+(`.nextUntil` is also available)
+
 ## Get the n-th element
 
 ```javascript
@@ -294,6 +337,24 @@ const classes = $("p")
   .map((_, e) => $(e).attr("class"))
   .get();
 console.log(classes); // => [ 'C', 'B', 'A' ]
+```
+
+## Get the next text node
+
+```javascript
+const html = `<p>foo</p>bar<br>`;
+const $ = cheerio.load(html);
+const text = $("p")[0].nextSibling.nodeValue;
+console.log(text); // => bar
+```
+
+## Get multiple next text nodes
+
+```javascript
+const html = `<p>foo</p>bar<p>baz</p>quux`;
+const $ = cheerio.load(html);
+const text = [...$("p")].map(e => e.nextSibling.nodeValue);
+console.log(text); // => [ 'bar', 'quux' ]
 ```
 
 ## Get index of element among its siblings
@@ -692,7 +753,7 @@ console.log(comments); // => [ ' bar ', ' baz ' ]
 
 ```javascript
 const html = `<noscript><p>get me</p></noscript>`;
-const $ = cheerio.load(html, {xml: {xmlMode: true}});
+const $ = cheerio.load(html, {xml: true});
 const text = $("p").text();
 console.log(text); // => get me
 ```
@@ -713,4 +774,13 @@ const main = () => {
   console.log(textAll("p")); // => [ 'foo', 'bar' ]
 };
 main();
+```
+
+## Query XML CDATA
+
+```javascript
+const xml = `<description><![CDATA[<p>foo</p>]]></description>`;
+const $ = cheerio.load(xml, {xml: true});
+const text = $.load($("description").text())("p").text();
+console.log(text); // => foo
 ```
