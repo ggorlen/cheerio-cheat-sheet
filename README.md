@@ -75,6 +75,23 @@ axios
   .catch((err) => console.error(err));
 ```
 
+With Gooogle Apps Script:
+
+Install [cheeriogs](https://github.com/tani/cheeriogs).
+
+```javascript
+function myFunction() { // default GAS function name
+  const url = "https://www.example.com";
+  const response = UrlFetchApp.fetch(url);
+
+  // if debugging is necessary, bypass log truncation:
+  // DriveApp.createFile("test.html", response.getContentText());
+
+  const $ = Cheerio.load(response.getContentText());
+  console.log($('h1:contains("Domain")').text()); // => Example Domain
+}
+```
+
 ## Get text contents of one element
 
 ```javascript
