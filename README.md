@@ -655,6 +655,15 @@ console.log($.html("div"));
 // => <div><p>baz</p><p>foo</p><p>quux</p></div>
 ```
 
+## Replace text
+
+```javascript
+const html = `<p>foo</p>`;
+const $ = cheerio.load(html);
+$("p").text("bar");
+console.log($.html("p")); // => <p>bar</p>
+```
+
 ## Replace HTML
 
 ```javascript
