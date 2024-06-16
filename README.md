@@ -298,14 +298,14 @@ console.log(text); // => [ 'c', 'b' ]
 ```javascript
 const html = `<p>one</p><p>two</p><p>three</p>`;
 const $ = cheerio.load(html);
-const text = $($("p").get(1)).text();
+const text = $("p").eq(1).text();
 console.log(text); // => two
 ```
 
 Or:
 
 ```javascript
-const text = $($("p").eq(1)).text();
+const text = $($("p").get(1)).text();
 ```
 
 ## Get the n-th element from the rear
@@ -313,7 +313,7 @@ const text = $($("p").eq(1)).text();
 ```javascript
 const html = `<p>one</p><p>two</p><p>three</p>`;
 const $ = cheerio.load(html);
-const text = $($("p").get(-2)).text();
+const text = $("p").eq(-2).text();
 console.log(text); // => two
 ```
 
